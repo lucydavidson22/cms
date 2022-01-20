@@ -1,6 +1,7 @@
 h3{
     display: inline-block;
     margin: 0;
+    margin: 5px;
 }
 
 .panel{
@@ -10,6 +11,8 @@ h3{
 
 .panel-heading{
     min-height: 50px;
+    display: inline-block;
+    margin: 5px;
 }
 
 .btn{
