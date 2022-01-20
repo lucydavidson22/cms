@@ -5,7 +5,7 @@ h3{
 }
 
 .panel{
-    max-width: 500px;
+    max-width: 450px;
     margin: 30px;
 }
 
@@ -13,7 +13,7 @@ h3{
     min-height: 50px;
     display: inline-block;
     /* margin: 5px; */
-    width: 500px;
+    width: 450px;
 }
 
 .btn{

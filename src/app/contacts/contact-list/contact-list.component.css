@@ -4,9 +4,10 @@ h3{
 }
 
 .panel{
-    max-width: 500px;
+    max-width: 450px;
 }
 
 .panel-heading{
     min-height: 50px;
+    width: 450px;
 }
