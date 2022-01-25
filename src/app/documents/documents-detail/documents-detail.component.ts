@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Document } from '../document.model';
 
 @Component({
   selector: 'cms-documents-detail',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./documents-detail.component.css']
 })
 export class DocumentsDetailComponent implements OnInit {
+  @Input() document!: Document;
 
   constructor() { }
 
