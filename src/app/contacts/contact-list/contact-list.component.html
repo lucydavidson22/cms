@@ -3,15 +3,15 @@
         <div class="panel-heading">
             <h3><b>Contacts</b></h3>
             <span class="pull-right">
-                <button class="btn btn-success">New Contact</button>
+                <button [routerLink]="['new']" class="btn btn-success">New Contact</button>
             </span>
         </div>
         <div class="panel-body">
             <!-- <cms-contact-list></cms-contact-list> -->
-            <cms-contact-item 
+            <cms-contact-item
             *ngFor="let contactElement of contacts"
-            [contact]="contactElement"
-            (contactSelected)="onContactSelected(contactElement)"></cms-contact-item>
+            [contact]="contactElement"></cms-contact-item>
+            <!-- (contactSelected)="onContactSelected(contactElement)" -->
         </div>
-    </div> 
+    </div>
 </div>

@@ -5,13 +5,13 @@
             <div class="pull-left">
                 <img
                     [src] = "contact.imageUrl"
-                    alt="{{ contact.name }}" 
-                    class="img-responsive" 
+                    alt="{{ contact.name }}"
+                    class="img-responsive"
                     style="max-height:50px;">
             </div>
             <div class="pull-right">
-                <button class="btn btn-primary">Edit</button>
-                <button class="btn btn-danger">Delete</button>
+                <a [routerLink]="['edit']" class="btn btn-primary">Edit</a>
+                <a (click)="onDelete()" class="btn btn-danger">Delete</a>
             </div>
         </div>
         <div class="panel-body">
@@ -22,5 +22,5 @@
             <span class="pull-right">
             </span>
         </div>
-    </div> 
+    </div>
 </div>
