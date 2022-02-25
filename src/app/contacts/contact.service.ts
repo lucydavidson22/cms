@@ -49,8 +49,8 @@ export class ContactService {
    getMaxId(): number {
     let maxId = 0;
     for(let contact of this.contacts){
-        if(parseInt(contact.id) > maxId){
-          maxId = parseInt(contact.id);
+        if(parseInt(contact.id, 10) > maxId){
+          maxId = parseInt(contact.id, 10);
         }
     }
     return maxId
@@ -62,14 +62,15 @@ export class ContactService {
     }
 
     this.maxContactId++;
-    let a = parseInt(newContact.id);
-    a = this.maxContactId;
+    // let a = parseInt(newContact.id);
+    newContact.id= this.maxContactId + "";
     this.contacts.push(newContact);
-    let documentsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(documentsListClone);
+    let contactsListClone = this.contacts.slice();
+    this.contactListChangedEvent.next(contactsListClone);
   }
 
-  updateDocument(originalContact: Contact, newContact: Contact){
+  updateContact(originalContact: Contact, newContact: Contact){
+    console.log('new contact', newContact)
     if(!(originalContact || newContact)){
       return;
     }
@@ -77,9 +78,10 @@ export class ContactService {
     if(pos < 0){
       return;
     }
+    console.log("something here!");
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
-    let documentsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(documentsListClone);
+    let contactsListClone = this.contacts.slice();
+    this.contactListChangedEvent.next(contactsListClone);
   }
 }

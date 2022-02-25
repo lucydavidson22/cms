@@ -6,14 +6,14 @@ h3{
 
 .panel{
     max-width: 450px;
-    margin: 30px;
+    /* margin: 30px; */
 }
 
 .panel-heading{
     min-height: 50px;
     display: inline-block;
     /* margin: 5px; */
-    width: 450px;
+    min-width: 450px;
 }
 
 .btn{

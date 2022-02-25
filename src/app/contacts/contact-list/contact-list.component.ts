@@ -21,8 +21,9 @@ export class ContactListComponent implements OnInit {
       }
     )
     this.contacts = this.contactService.getContacts();
-    this.subscription = this.contactService.contactListChangedEvent.subscribe(documentList => {
-      this.contacts = documentList;
+    this.subscription = this.contactService.contactListChangedEvent.subscribe(contactList => {
+      console.log('Subscription updated!', contactList)
+      this.contacts = contactList;
     });
   }
 

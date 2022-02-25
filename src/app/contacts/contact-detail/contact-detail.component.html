@@ -1,11 +1,11 @@
 <div class="container"> <!--*ngFor="let contactDeets of contact"> -->
     <div class="panel panel-default">
         <div class="panel-heading" >
-            <h3><b> {{ contact.name }}</b></h3>
+            <h3><b> {{ contact?.name }}</b></h3>
             <div class="pull-left">
                 <img
                     [src] = "contact.imageUrl"
-                    alt="{{ contact.name }}"
+                    alt="{{ contact?.name }}"
                     class="img-responsive"
                     style="max-height:50px;">
             </div>
@@ -16,8 +16,8 @@
         </div>
         <div class="panel-body">
             <div class="pull-left">
-                <p>Email: {{ contact.email }}</p>
-                <p>Phone: {{ contact.phone }}</p>
+                <p>Email: {{ contact?.email }}</p>
+                <p>Phone: {{ contact?.phone }}</p>
             </div>
             <span class="pull-right">
             </span>

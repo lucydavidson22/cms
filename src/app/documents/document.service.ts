@@ -48,8 +48,8 @@ export class DocumentService {
   getMaxId(): number {
     let maxId = 0;
     for(let document of this.documents){
-        if(parseInt(document.id) > maxId){
-          maxId = parseInt(document.id);
+        if(parseInt(document.id, 10) > maxId){
+          maxId = parseInt(document.id, 10);
         }
     }
     return maxId
@@ -61,8 +61,8 @@ export class DocumentService {
     }
 
     this.maxDocumentId++;
-    let a = parseInt(newDocument.id);
-    a = this.maxDocumentId;
+    // let a = parseInt(newDocument.id);
+    newDocument.id = this.maxDocumentId + "";
     this.documents.push(newDocument);
     let documentsListClone = this.documents.slice();
     this.documentListChangedEvent.next(documentsListClone);
