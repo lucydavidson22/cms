@@ -1,4 +1,4 @@
-<div class="container"> <!--*ngFor="let contactDeets of contact"> -->
+<div *ngIf="contact?.name" class="container"> <!--*ngFor="let contactDeets of contact"> -->
     <div class="panel panel-default">
         <div class="panel-heading" >
             <h3><b> {{ contact?.name }}</b></h3>
