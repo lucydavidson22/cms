@@ -27,7 +27,7 @@ export class ContactService {
 
    getContactsHttp(){
     return this.http
-    .get<Contact[]>('https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json')
+    .get<Contact[]>('https://sigora-datasave-default-rtdb.firebaseio.com/clientnames.json')
     .subscribe(
       //success method
       (contacts:Contact[] = []) => {
@@ -118,7 +118,7 @@ export class ContactService {
     const contacts = JSON.stringify(this.getContacts())
      this.http
      .put(
-       'https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json',
+       'https://sigora-datasave-default-rtdb.firebaseio.com/clientnames.json',
      contacts,
      {
       headers: new HttpHeaders({'Content-Type': 'application/json'}),
