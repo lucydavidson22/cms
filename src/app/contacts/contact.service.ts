@@ -27,7 +27,7 @@ export class ContactService {
 
    getContactsHttp(){
     return this.http
-    .get<Contact[]>('https://sigora-datasave-default-rtdb.firebaseio.com/clientnames.json')
+    .get<Contact[]>('https://sigora-datasave-default-rtdb.firebaseio.com/contacts.json')
     .subscribe(
       //success method
       (contacts:Contact[] = []) => {
@@ -118,7 +118,7 @@ export class ContactService {
     const contacts = JSON.stringify(this.getContacts())
      this.http
      .put(
-       'https://sigora-datasave-default-rtdb.firebaseio.com/clientnames.json',
+       'https://sigora-datasave-default-rtdb.firebaseio.com/contacts.json',
      contacts,
      {
       headers: new HttpHeaders({'Content-Type': 'application/json'}),
