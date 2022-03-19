@@ -27,20 +27,18 @@ export class ContactService {
 
    getContactsHttp(){
     return this.http
-    .get<Contact[]>('https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json')
+    // .get<Contact[]>('https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json')
+    .get<Contact[]>('http://localhost:3000/contacts')
     .subscribe(
       //success method
-      (contacts:Contact[] = []) => {
-        this.contacts = contacts;    //Assign the array of documents received to the documents property.
-        this.maxContactId = this.getMaxId();  //get the maximum value used for the id property in the document list, assign the value returned to the maxDocumentId
-        contacts.sort((currentElement, nextElement) => {    //Sort the list of documents by name using the sort() JavaScript array method.
+      (contacts:Contact[]) => {
+        this.contacts = contacts;    //Assign the array of contacts received to the contacts property.
+        this.maxContactId = this.getMaxId();  //get the maximum value used for the id property in the contact list, assign the value returned to the maxContactId
+        contacts.sort((currentElement, nextElement) => {    //Sort the list of contacts by name using the sort() JavaScript array method.
           if(currentElement > nextElement){ return 1; }
           if(currentElement < nextElement){ return -1; }
           else { return 0; }
          });
-           // this.documentChangedEvent.emit(this.documents.slice());   //emit the next document list change event
-          //  let contactsListClone = this.contacts.slice();
-          //  this.contactListChangedEvent.next(contactsListClone);
            this.contactListChangedEvent.next(this.contacts.slice());
       }
       //error method
@@ -70,64 +68,130 @@ export class ContactService {
       return maxId
     }
 
-   deleteContact(contact: Contact){
+  //  deleteContact(contact: Contact){
+  //   if (!contact) {
+  //     return;
+  //  }
+  //  const pos = this.contacts.indexOf(contact);
+  //  if (pos < 0) {
+  //     return;
+  //  }
+  //  this.contacts.splice(pos, 1);
+  //   this.storeContacts();
+  //  }
+
+  // addContact(newContact: Contact){
+  //   if(!newContact){
+  //     return;
+  //   }
+  //   this.maxContactId++;
+  //   newContact.id= this.maxContactId + "";
+  //   this.contacts.push(newContact);
+  //   this.storeContacts();
+  // }
+
+  // updateContact(originalContact: Contact, newContact: Contact){
+  //   console.log('new contact', newContact)
+  //   if(!(originalContact || newContact)){
+  //     return;
+  //   }
+  //   const pos = this.contacts.indexOf(originalContact);
+  //   if(pos < 0){
+  //     return;
+  //   }
+  //   console.log("something here!");
+  //   newContact.id = originalContact.id;
+  //   this.contacts[pos] = newContact;
+  //   this.storeContacts();
+  // }
+
+  addContact(contact: Contact) {
     if (!contact) {
       return;
-   }
-   const pos = this.contacts.indexOf(contact);
-   if (pos < 0) {
-      return;
-   }
-   this.contacts.splice(pos, 1);
-    //  this.contactChangedEvent.emit(this.contacts.slice());
-    // let contactsListClone = this.contacts.slice();
-    // this.contactListChangedEvent.next(contactsListClone);
-    this.storeContacts();
-   }
-
-  addContact(newContact: Contact){
-    if(!newContact){
-      return;
     }
-    this.maxContactId++;
-    newContact.id= this.maxContactId + "";
-    this.contacts.push(newContact);
-    // let contactsListClone = this.contacts.slice();
-    // this.contactListChangedEvent.next(contactsListClone);
-    this.storeContacts();
+    console.log('try to create a contact');
+    // make sure id of the new Contact is empty
+    contact.id = '';
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ message: string, contact: Contact }>('http://localhost:3000/contacts/',
+      contact,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new contact to contacts
+          this.contacts.push(responseData.contact);
+          this.contactListChangedEvent.next(this.contacts.slice());
+          // this.sortAndSend();
+        }
+      );
+      console.log('create contact try 2');
   }
 
-  updateContact(originalContact: Contact, newContact: Contact){
-    console.log('new contact', newContact)
-    if(!(originalContact || newContact)){
+  updateContact(originalContact: Contact, newContact: Contact) {
+    if (!originalContact || !newContact) {
       return;
     }
-    const pos = this.contacts.indexOf(originalContact);
-    if(pos < 0){
+
+    const pos = this.contacts.findIndex(d => d.id === originalContact.id);
+
+    if (pos < 0) {
       return;
     }
-    console.log("something here!");
+
+    // set the id of the new Contact to the id of the old Contact
     newContact.id = originalContact.id;
-    this.contacts[pos] = newContact;
-    // let contactsListClone = this.contacts.slice();
-    // this.contactListChangedEvent.next(contactsListClone);
-    this.storeContacts();
+    // newContact._id = originalContact._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // update database
+    this.http.put('http://localhost:3000/contacts/' + originalContact.id,
+      newContact, { headers: headers })
+      .subscribe(
+        () => {
+          this.contacts[pos] = newContact;
+          this.contactListChangedEvent.next(this.contacts.slice());
+          // this.sortAndSend();
+        }
+      );
   }
 
-  storeContacts(){
-    const contacts = JSON.stringify(this.getContacts())
-     this.http
-     .put(
-       'https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json',
-     contacts,
-     {
-      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  deleteContact(contact: Contact) {
+    if (!contact) {
+      return;
     }
-     )
-     .subscribe(()=>{
-        // this.documentChangedEvent.emit(this.documents.slice()); //if something is wrong, try removing this line
-        // let documentsListClone = this.documents.slice();
-        this.contactListChangedEvent.next(this.contacts.slice());
-     })
+
+    const pos = this.contacts.findIndex(d => d.id === contact.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.http.delete('http://localhost:3000/contacts/' + contact.id)
+      .subscribe(
+        () => {
+          this.contacts.splice(pos, 1);
+          this.contactListChangedEvent.next(this.contacts.slice());
+          // this.sortAndSend();
+        }
+      );
   }
+
+  // storeContacts(){
+  //   const contacts = JSON.stringify(this.getContacts())
+  //    this.http
+  //    .put(
+  //      'https://lucyd-cms-default-rtdb.firebaseio.com/contacts.json',
+  //    contacts,
+  //    {
+  //     headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  //   }
+  //    )
+  //    .subscribe(()=>{
+  //       this.contactListChangedEvent.next(this.contacts.slice());
+  //    })
+  // }
 }

@@ -12,7 +12,7 @@ export class MessageService {
   maxMessageId: number;
 
   constructor(private http: HttpClient) {
-    this.messages = MOCKMESSAGES;
+    // this.messages = MOCKMESSAGES;
     this.getMessagesHttp();
    }
 
@@ -29,11 +29,10 @@ export class MessageService {
     return null!;
   }
 
-  addMessage(messages: Message){
-    this.messages.push(messages);
-    this.storeMessages();
-    // this.messagesChanged.emit(this.messages.slice());
-  }
+  // addMessage(messages: Message){
+  //   this.messages.push(messages);
+  //   this.storeMessages();
+  // }
 
   getMaxId(){
     let maxId = 0;
@@ -47,9 +46,10 @@ export class MessageService {
 
   getMessagesHttp(){
     return this.http
-    .get<Message[]>('https://lucyd-cms-default-rtdb.firebaseio.com/messages.json')
+    // .get<Message[]>('https://lucyd-cms-default-rtdb.firebaseio.com/messages.json')
+    .get<Message[]>('http://localhost:3000/messages')
     .subscribe(
-      (messages:Message[] = []) => {
+      (messages:Message[]) => {
         this.messages = messages;
         this.maxMessageId = this.getMaxId();
         messages.sort((a, b) => {
@@ -66,21 +66,26 @@ export class MessageService {
     );
   }
 
-  storeMessages(){
-    const messages = JSON.stringify(this.getMessages())
-     this.http
-     .put(
-       'https://lucyd-cms-default-rtdb.firebaseio.com/messages.json',
-     messages,
-     {
-      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  addMessage(message: Message) {
+    if (!message) {
+      return;
     }
-     )
-     .subscribe(()=>{
-        // this.documentChangedEvent.emit(this.documents.slice()); //if something is wrong, try removing this line
-        // let documentsListClone = this.documents.slice();
-        this.messagesChanged.next(this.messages.slice());
-     })
+
+    // make sure id of the new Message is empty
+    message.id = '';
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // add to database
+    this.http.post<{ messages: string, message: Message }>('http://localhost:3000/messages',
+      message,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new message to messages
+          this.messages.push(responseData.message);
+        // this.messagesChanged.next(this.messages.slice());
+        }
+      );
   }
 
 }

@@ -1,21 +1,22 @@
 // Get dependencies
-var express = require('express');
-var path = require('path');
-var http = require('http');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let express = require('express');
+let path = require('path');
+let http = require('http');
+var mongoose = require('mongoose');
+
+let bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
 // import the routing file to handle the default (index) route
-var index = require('./server/routes/app');
-
-// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
-const messageRoutes = require('./server/routes/messages');
-const contactRoutes = require('./server/routes/contacts');
+let index = require('./server/routes/app');
+const messagesRoutes = require('./server/routes/messages');
+const contactsRoutes = require('./server/routes/contacts');
 const documentsRoutes = require('./server/routes/documents');
 
+// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
 
-var app = express(); // create an instance of express
+let app = express(); // create an instance of express
 
 // Tell express to use the following parsers for POST data
 app.use(bodyParser.json());
@@ -46,12 +47,30 @@ app.use(express.static(path.join(__dirname, 'dist/cms')));
 
 // Tell express to map the default route ('/') to the index route
 app.use('/', index);
+app.use('/messages', messagesRoutes);
+app.use('/contacts', contactsRoutes);
+app.use('/documents', documentsRoutes);
+
+//For 404
+app.use((req, res, next) => {
+  res.render('index')
+});
+
+
+// establish a connection to the mongo database
+mongoose.connect('mongodb+srv://Davidson:6erYFFMgI4qWRNod@clustercms.nn6yu.mongodb.net/cms?retryWrites=true&w=majority',
+  { useNewUrlParser: true }, (err, res) => {
+    if (err) {
+      console.log('Connection failed: ' + err);
+    }
+    else {
+      console.log('Connected to database!');
+    }
+  }
+);
+
 
 // ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
-app.use('/', index);
-app.use('/messages', messageRoutes);
-app.use('/contacts', contactRoutes);
-app.use('/documents', documentsRoutes);
 
 // Tell express to map all other non-defined routes back to the index page
 app.get('*', (req, res) => {
