@@ -20,7 +20,8 @@ const appRoutes: Routes = [
     {path: 'new', component: ContactEditComponent},
     {path: ':id', component: ContactDetailComponent},
     {path: ':id/edit', component: ContactEditComponent}
-  ]}
+  ]},
+  {path: '**', component: DocumentsComponent}
 ];
 
 @NgModule({
