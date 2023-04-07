@@ -58,6 +58,7 @@ app.use((req, res, next) => {
 
 
 // establish a connection to the mongo database
+//mongoose.connect('mongodb+srv://Davidson:6erYFFMgI4qWRNod@clustercms.nn6yu.mongodb.net/cms',
 mongoose.connect('mongodb+srv://Davidson:6erYFFMgI4qWRNod@clustercms.nn6yu.mongodb.net/cms?retryWrites=true&w=majority',
   { useNewUrlParser: true }, (err, res) => {
     if (err) {
