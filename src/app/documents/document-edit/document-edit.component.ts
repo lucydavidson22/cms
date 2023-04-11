@@ -46,7 +46,7 @@ export class DocumentEditComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm){
     const value = form.value;
     // console.log(value.name, value.id);
-    const newDocument = new Document('0', value.name, value.description, value.url);
+    const newDocument = new Document('0', value.name, value.url, value.date, value.clientSponsor, value.location, value.publication, value.category, value.tangibleItems, value.description, value.profileStartedBy, value.profileStatus);
                                     //could an error be here because it expects a value.id
     if(this.editMode){
       this.documentService.updateDocument(this.originalDocument, newDocument)

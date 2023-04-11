@@ -36,8 +36,8 @@ export class DocumentService {
          this.documents = documents;    //Assign the array of documents received to the documents property.
          this.maxDocumentId = this.getMaxId();  //get the maximum value used for the id property in the document list, assign the value returned to the maxDocumentId
          documents.sort((a, b) => {    //Sort the list of documents by name using the sort() JavaScript array method.
-           if(a.name > b.name){ return 1; }
-           if(a.name < b.name){ return -1; }
+           if(a.id > b.id){ return 1; }
+           if(a.id < b.id){ return -1; }
            else { return 0; }
           });
             // this.documentChangedEvent.emit(this.documents.slice());   //emit the next document list change event

@@ -1,11 +1,11 @@
-<div class="container">
+<!-- <div class="container">
     <div class="panel panel-default">
         <!-- <div class="panel-heading">
             <h3><b>Contacts</b></h3>
             <span class="pull-right">
                 <button [routerLink]="['new']" class="btn btn-success">New Contact</button>
             </span>
-        </div> -->
+        </div>
         <div class="row">
           <div class="col-xs-12">
             <div class="panel panel-default">
@@ -36,4 +36,25 @@
         </div>
       </div>
     </div>
+</div> -->
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row pad-left-right">
+      <span class="pull-left title">Contact</span>
+      <div class="input-group pull-left pad-left-right col-xs-7">
+        <input #searchBox class="form-control" placeholder="Enter a seach value..." (keyup)="search(searchBox.value)">
+        <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
+      </div>
+      <a [routerLink]="['new']" class="btn btn-success pull-right">Add Contact</a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="center-panel" class="masonry-container">
+      <cms-contact-item class="masonry-item"
+      *ngFor="let contact of contacts | contactsFilter:term"
+      [contact]="contact"></cms-contact-item>
+    </div>
+  </div>
 </div>

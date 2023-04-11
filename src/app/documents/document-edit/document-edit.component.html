@@ -3,7 +3,7 @@
     <form id="document-edit" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="row">
         <div class="col-sm-12 form-group">
-          <label for="name">Document Title:</label>
+          <label for="name">Project Title:</label>
           <input
             type="text"
             id="name"
@@ -19,7 +19,128 @@
 
       <div class="row">
         <div class="col-sm-12 form-group">
-          <label for="description">Document Description:</label>
+          <label for="url">Project URL:</label>
+          <input
+            type="text"
+            id="url"
+            class="form-control"
+            size="150"
+            max="255"
+            name="url"
+            [ngModel]=document?.url
+            #url="ngModel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="date">Project Date:</label>
+          <input
+            type="text"
+            id="date"
+            class="form-control"
+            size="120"
+            max="255"
+            name="date"
+            [ngModel]=document?.date
+            #date = "ngModel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="clientSponsor">Client/Sponsor:</label>
+          <input
+            type="text"
+            id="clientSponsor"
+            class="form-control"
+            size="120"
+            max="255"
+            name="clientSponsor"
+            [ngModel]=document?.clientSponsor
+            #clientSponsor = "ngModel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="location">Location:</label>
+          <input
+            type="text"
+            id="location"
+            class="form-control"
+            size="120"
+            max="255"
+            name="location"
+            [ngModel]=document?.location
+            #location = "ngModel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="publication">Publication:</label>
+          <input
+            type="text"
+            id="publication"
+            class="form-control"
+            size="120"
+            max="255"
+            name="publication"
+            [ngModel]=document?.publication
+            #publication = "ngModel">
+        </div>
+      </div>
+
+      <!-- <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="category">Category:</label>
+          <input
+            type="text"
+            id="category"
+            class="form-control"
+            size="120"
+            max="255"
+            name="category"
+            [ngModel]=document?.category
+            #category = "ngModel">
+        </div>
+      </div> -->
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="category">Category:</label>
+          <select id="category" class="form-control" name="category" [ngModel]=document?.category #category="ngModel">
+            <option value="" disabled selected>Select a category</option>
+            <option value="LTC Training">LTC Training</option>
+            <option value="Education">Education</option>
+            <option value="Research">Research</option>
+            <option value="Tool">Tool</option>
+            <option value="Health Management Program">Health Management Program</option>
+            <option value="Publication">Publication</option>
+            <option value="Presentation">Presentation</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="tangibleItems">Tangible Items:</label>
+          <input
+            type="text"
+            id="tangibleItems"
+            class="form-control"
+            size="120"
+            max="255"
+            name="tangibleItems"
+            [ngModel]=document?.tangibleItems
+            #tangibleItems = "ngModel">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="description">Project Description:</label>
           <input
             type="text"
             id="description"
@@ -34,24 +155,38 @@
 
       <div class="row">
         <div class="col-sm-12 form-group">
-          <label for="url">Document URL:</label>
+          <label for="profileStartedBy">Profile Page Started By:</label>
           <input
             type="text"
-            id="url"
+            id="profileStartedBy"
             class="form-control"
-            size="150"
+            size="120"
             max="255"
-            name="url"
-            [ngModel]=document?.url
-            required
-            #url="ngModel">
-            <div>
-
-            </div>
+            name="profileStartedBy"
+            [ngModel]=document?.profileStartedBy
+            #profileStartedBy = "ngModel">
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="profileStartedBy">Profile Page Status:</label>
+          <input
+            type="text"
+            id="profileStatus"
+            class="form-control"
+            size="120"
+            max="255"
+            name="profileStatus"
+            [ngModel]=document?.profileStatus
+            #profileStatus = "ngModel">
+        </div>
+      </div>
+
+
+
       <div class="alert alert-danger" *ngIf="!f.valid && f.touched">
-        The Document Title and Document URL are required fields.
+        The and Project Name is a required field.
       </div>
       <div class="row">
         <div class="col-xs-12 btn-toolbar">

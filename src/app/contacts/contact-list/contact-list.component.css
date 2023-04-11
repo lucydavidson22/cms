@@ -1,14 +1,24 @@
 h3{
-    display: inline-block;
-    margin: 0;
+  display: inline-block;
+  margin: 0;
 }
 
-.panel{
+/* .panel{
   max-width: 450px;
-}
+} */
 
 .panel-heading{
   min-height: 50px;
   display: inline-block;
   min-width: 450px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.pad-left-right{
+  padding-left:1rem;
+  padding-right:1rem;
 }

@@ -2,13 +2,17 @@
     <div class="panel-heading">
       <div class="row pad-left-right">
         <span class="pull-left title">Documents</span>
+        <div class="input-group pull-left pad-left-right col-xs-7">
+          <input #searchBox class="form-control" placeholder="Enter a seach value..." (keyup)="search(searchBox.value)">
+          <div class="glyphicon glyphicon-search input-group-addon" (click)="search(searchBox.value)"></div>
+        </div>
         <a [routerLink]="['new']" class="btn btn-success pull-right">Add Document</a>
       </div>
     </div>
     <div class="panel-body">
-      <div class="center-panel">
-        <cms-documents-item
-        *ngFor="let document of documents;"
+      <div class="center-panel" class="masonry-container">
+        <cms-documents-item class="masonry-item"
+        *ngFor="let document of documents | documentsFilter:term"
         [document]="document"></cms-documents-item>
       </div>
     </div>

@@ -1,0 +1,16 @@
+.container{
+  float:left;
+  /* padding-left: 20px; */
+}
+
+.container{
+  /* padding-right: 5px; */
+  /* padding-left: 5px; */
+  padding: 10px;
+  margin-right: 0px;
+  margin-left: 0px;
+  width:100%;
+  /* background-color: rgb(177, 241, 255); */
+}
+
+

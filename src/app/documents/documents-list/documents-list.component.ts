@@ -11,6 +11,7 @@ import { DocumentService } from '../document.service';
 export class DocumentsListComponent implements OnInit, OnDestroy {
   documents: Document[] = [];
   private subscription: Subscription;
+  term:string;
 
   constructor(private documentService: DocumentService,
               ) { }
@@ -29,6 +30,10 @@ export class DocumentsListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.subscription.unsubscribe();
+  }
+
+  search(value:string){
+    this.term = value;
   }
 
 }
